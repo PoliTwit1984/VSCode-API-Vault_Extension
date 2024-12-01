@@ -51,7 +51,7 @@ Alternatively, use the Command Palette:
 - All your stored keys are automatically listed in the panel
 - Click "Show/Hide" next to any key to view its value
 - Click again to hide the value
-- Use the Command Palette's "API Vault: Get API Key" to quickly copy a key to clipboard
+- Use the dedicated copy button or Command Palette's "API Vault: Get API Key" to copy a key to clipboard
 - Key names are synced, but values are stored securely in your local system keychain
 
 ### Managing Keys
@@ -101,6 +101,11 @@ This extension contributes no additional settings.
 None at this time.
 
 ## Release Notes
+
+### 2.0.4
+- Added dedicated copy button with icon for each API key
+- Enhanced UI with visual feedback when copying keys
+- Improved accessibility for copying API keys
 
 ### 2.0.3
 - Fixed Command Palette integration

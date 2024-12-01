@@ -40,6 +40,13 @@ class APIVaultViewProvider {
                         const value = await this._secretStorage.get(message.key);
                         webview.postMessage({ command: 'showKey', key: message.key, value });
                         break;
+                    case 'copyKey':
+                        const keyValue = await this._secretStorage.get(message.key);
+                        if (keyValue) {
+                            await vscode.env.clipboard.writeText(keyValue);
+                            vscode.window.showInformationMessage(`API key "${message.key}" copied to clipboard!`);
+                        }
+                        break;
                     case 'deleteKey':
                         await this._secretStorage.delete(message.key);
                         await this._removeFromKeysList(message.key);
@@ -190,6 +197,16 @@ class APIVaultViewProvider {
                     background: var(--vscode-textBlockQuote-background);
                     border-radius: 4px;
                 }
+                .copy-icon {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 4px;
+                }
+                .copy-icon svg {
+                    width: 14px;
+                    height: 14px;
+                    fill: currentColor;
+                }
             </style>
         </head>
         <body>
@@ -237,6 +254,13 @@ class APIVaultViewProvider {
                     });
                 }
 
+                function copyKey(key) {
+                    vscode.postMessage({
+                        command: 'copyKey',
+                        key: key
+                    });
+                }
+
                 function deleteKey(key) {
                     if (confirm('Are you sure you want to delete this API key?')) {
                         vscode.postMessage({
@@ -261,6 +285,12 @@ class APIVaultViewProvider {
                                     <div class="key-name">\${key}</div>
                                     <div class="key-actions">
                                         <button onclick="toggleKey('\${key}')">Show/Hide</button>
+                                        <button onclick="copyKey('\${key}')" class="copy-icon">
+                                            <svg viewBox="0 0 16 16">
+                                                <path d="M4 4h3v1H4v8h8V9h1v4H3V4zm5-3h6v6h-1V2.5L7.5 9 7 8.5 13.5 2H9V1z"/>
+                                            </svg>
+                                            Copy
+                                        </button>
                                         <button onclick="deleteKey('\${key}')">Delete</button>
                                     </div>
                                     <div id="value-\${key}" class="key-value"></div>
