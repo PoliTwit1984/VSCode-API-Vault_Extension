@@ -110,7 +110,7 @@ Initial release of API Vault:
 
 ## Contributing
 
-Found a bug or have a feature request? Please open an issue on our [GitHub repository](https://github.com/joewilson/vscode-api-vault).
+Found a bug or have a feature request? Please open an issue on our [GitHub repository](https://github.com/PoliTwit1984/VSCode-API-Vault_Extension).
 
 ## License
 
