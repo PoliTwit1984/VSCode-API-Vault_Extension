@@ -31,6 +31,13 @@ class APIVaultViewProvider implements vscode.WebviewViewProvider {
         this._updateStoredKeys();
     }
 
+    // Public method to check if view exists and refresh keys
+    public refreshKeys(): void {
+        if (this._view) {
+            this._view.webview.postMessage({ command: 'refreshKeys' });
+        }
+    }
+
     private async _setWebviewMessageListener(webview: vscode.Webview) {
         webview.onDidReceiveMessage(async (message) => {
             try {
@@ -338,6 +345,9 @@ export function activate(context: vscode.ExtensionContext) {
 
             await context.secrets.store(key, value);
             vscode.window.showInformationMessage(`API key "${key}" stored successfully!`);
+            
+            // Refresh the webview if it exists
+            APIVaultViewProvider.currentProvider?.refreshKeys();
         } catch (err) {
             const error = err as Error;
             vscode.window.showErrorMessage(`Error storing key: ${error.message}`);
@@ -366,6 +376,10 @@ export function activate(context: vscode.ExtensionContext) {
                 vscode.window.showErrorMessage(`No API key found for "${key}"`);
                 return undefined;
             }
+
+            // Copy to clipboard
+            await vscode.env.clipboard.writeText(value);
+            vscode.window.showInformationMessage(`API key "${key}" copied to clipboard!`);
             return value;
         } catch (err) {
             const error = err as Error;
@@ -374,7 +388,44 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(storeKeyCommand, getKeyCommand);
+    // Register the list keys command
+    let listKeysCommand = vscode.commands.registerCommand('api-vault.listKeys', async () => {
+        try {
+            const keys = context.globalState.get<string[]>('api-vault-keys', []);
+            
+            if (keys.length === 0) {
+                vscode.window.showInformationMessage('No API keys stored yet.');
+                return;
+            }
+
+            const selectedKey = await vscode.window.showQuickPick(keys, {
+                placeHolder: 'Select an API key to view options'
+            });
+
+            if (selectedKey) {
+                const action = await vscode.window.showQuickPick(['Copy to Clipboard', 'Delete Key'], {
+                    placeHolder: `Choose action for ${selectedKey}`
+                });
+
+                if (action === 'Copy to Clipboard') {
+                    await vscode.commands.executeCommand('api-vault.getKey', selectedKey);
+                } else if (action === 'Delete Key') {
+                    await context.secrets.delete(selectedKey);
+                    const updatedKeys = keys.filter(k => k !== selectedKey);
+                    await context.globalState.update('api-vault-keys', updatedKeys);
+                    vscode.window.showInformationMessage(`API key "${selectedKey}" deleted successfully!`);
+                    
+                    // Refresh the webview if it exists
+                    APIVaultViewProvider.currentProvider?.refreshKeys();
+                }
+            }
+        } catch (err) {
+            const error = err as Error;
+            vscode.window.showErrorMessage(`Error listing keys: ${error.message}`);
+        }
+    });
+
+    context.subscriptions.push(storeKeyCommand, getKeyCommand, listKeysCommand);
 }
 
 export function deactivate() {}

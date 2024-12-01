@@ -2,14 +2,17 @@
 
 A secure and convenient VS Code extension for managing your API keys directly from the Activity Bar, now with sync support across VS Code instances!
 
+![API Vault Interface](api-screenshot.png)
+
 ## Features
 
 - 🔄 Sync API key names across VS Code instances
 - 🔒 Securely store API keys using VS Code's built-in SecretStorage
-- 🎯 Quick access from the Activity Bar
+- 🎯 Quick access from both Activity Bar and Command Palette
 - 👀 Easy-to-use interface for managing all your API keys
 - 🔑 Show/Hide functionality for viewing key values
 - 🗑️ One-click deletion of stored keys
+- 📋 Copy API keys directly to clipboard
 
 ## Installation
 
@@ -30,6 +33,7 @@ API Vault 2.0 introduces syncing capabilities:
 ### Opening API Vault
 - Click the API icon in the Activity Bar (left sidebar)
 - The API Vault panel will open, showing all your stored keys
+- Alternatively, use the Command Palette (Cmd+Shift+P / Ctrl+Shift+P) and search for "API Vault"
 
 ### Storing a New API Key
 1. In the API Vault panel, find the "Store New API Key" section at the top
@@ -38,14 +42,22 @@ API Vault 2.0 introduces syncing capabilities:
 4. Click "Store Key"
 5. The key name will sync across your VS Code instances
 
-### Viewing Stored Keys
+Alternatively, use the Command Palette:
+1. Open Command Palette (Cmd+Shift+P / Ctrl+Shift+P)
+2. Search for "API Vault: Store New API Key"
+3. Follow the prompts to enter key name and value
+
+### Viewing and Copying Stored Keys
 - All your stored keys are automatically listed in the panel
 - Click "Show/Hide" next to any key to view its value
 - Click again to hide the value
+- Use the Command Palette's "API Vault: Get API Key" to quickly copy a key to clipboard
 - Key names are synced, but values are stored securely in your local system keychain
 
-### Deleting Keys
-- Click "Delete" next to any key you want to remove
+### Managing Keys
+- Use the Command Palette's "API Vault: List API Keys" for quick key management
+- Select a key to view options for copying or deleting
+- In the Activity Bar interface, use the "Delete" button next to any key
 - Confirm the deletion when prompted
 - The deletion will sync across your VS Code instances
 
@@ -69,11 +81,11 @@ API Vault uses a hybrid approach for maximum security and convenience:
 
 ## Commands
 
-While the main interface is accessible from the Activity Bar, you can also use these commands from the Command Palette (Cmd+Shift+P / Ctrl+Shift+P):
+API Vault provides convenient access through both the Activity Bar and Command Palette (Cmd+Shift+P / Ctrl+Shift+P):
 
-- `API Vault: Store New API Key` - Store a new API key
-- `API Vault: List API Keys` - Open the API Vault panel
-- `API Vault: Get API Key` - Retrieve a specific key
+- `API Vault: Store New API Key` - Store a new API key with a guided prompt interface
+- `API Vault: Get API Key` - Quickly retrieve and copy a key to clipboard
+- `API Vault: List API Keys` - View and manage your stored keys with copy/delete options
 
 ## Requirements
 
@@ -90,8 +102,19 @@ None at this time.
 
 ## Release Notes
 
-### 2.0.0
+### 2.0.3
+- Fixed Command Palette integration
+- Improved sync between Activity Bar and Command Palette interfaces
+- Enhanced clipboard support for quick key copying
+- Updated documentation with comprehensive usage instructions
 
+### 2.0.2
+- Enhanced Command Palette integration
+- Added clipboard support for quick key copying
+- Improved key management through Command Palette
+- Better sync between Activity Bar and Command Palette interfaces
+
+### 2.0.0
 Major update with syncing support:
 - Added sync capability for API key names
 - Improved security with hybrid storage approach
@@ -99,7 +122,6 @@ Major update with syncing support:
 - Updated documentation for sync features
 
 ### 1.0.0
-
 Initial release of API Vault:
 - Activity Bar integration
 - Secure key storage
