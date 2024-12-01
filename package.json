@@ -2,7 +2,7 @@
   "name": "api-vault",
   "displayName": "API Vault",
   "description": "A secure vault for storing and managing API keys with sync support",
-  "version": "2.0.4",
+  "version": "2.0.7",
   "icon": "API.png",
   "publisher": "JosephDavidWilsonJr",
   "repository": {

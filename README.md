@@ -102,6 +102,18 @@ None at this time.
 
 ## Release Notes
 
+### 2.0.7
+- Reverted to original icon for consistent branding
+- Optimized icon display in Activity Bar
+
+### 2.0.6
+- Updated Activity Bar icon for improved visibility
+- Refined visual appearance in the sidebar
+
+### 2.0.5
+- Updated extension icon for better visibility in the Activity Bar
+- Enhanced visual consistency across the extension
+
 ### 2.0.4
 - Added dedicated copy button with icon for each API key
 - Enhanced UI with visual feedback when copying keys
