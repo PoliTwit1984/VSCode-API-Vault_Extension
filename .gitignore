@@ -1,0 +1,65 @@
+# Build output
+out/
+dist/
+*.vsix
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# VS Code specific
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Cache directories
+.npm/
+.eslintcache
+.parcel-cache/
+.cache/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.test
+.env.production
+
+# System files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor directories and files
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+.history/
+
+# Package files
+*.tgz
+.yarn-integrity
+
+# Debug
+.debug/

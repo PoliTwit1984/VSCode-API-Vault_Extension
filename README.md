@@ -1,156 +1,74 @@
-# API Vault for VS Code
+# 🔒 API Vault
 
-A secure and convenient VS Code extension for managing your API keys directly from the Activity Bar, now with sync support across VS Code instances!
+**Never leave VS Code to find your API keys again!** API Vault is your secure, convenient key manager that lives right in your favorite editor.
 
-![API Vault Interface](api-screenshot.png)
+![API Vault Demo](api-vault.png)
 
-## Features
+## ✨ Features
 
-- 🔄 Sync API key names across VS Code instances
-- 🔒 Securely store API keys using VS Code's built-in SecretStorage
-- 🎯 Quick access from both Activity Bar and Command Palette
-- 👀 Easy-to-use interface for managing all your API keys
-- 🔑 Show/Hide functionality for viewing key values
-- 🗑️ One-click deletion of stored keys
-- 📋 Copy API keys directly to clipboard
+### 🎯 Everything Where You Need It
+- **Access keys instantly** without switching contexts
+- **Copy with one click** directly into your code
+- **Search and filter** to find keys quickly
+- All your keys are **just a keystroke away**
 
-## Installation
+### 🔐 Bank-Grade Security
+- Keys are stored in your **system's secure keychain**
+- **Zero plain-text storage** - everything is encrypted
+- **No cloud sync** - your keys stay on your machine
+- Follows security best practices
 
-1. Install the extension from the VS Code Marketplace
-2. Look for the API icon in the Activity Bar (left sidebar)
-3. Click it to open the API Vault panel
+### 🎨 Powerful Organization
+- **Drag-and-drop** keys between categories
+- **Collapsible categories** for better overview
+- **Custom categories** for perfect organization
+- **Reorder everything** just the way you like it
 
-## Syncing Support
+### 🚀 Seamless Integration
+- **Native VS Code UI** - feels right at home
+- **Keyboard shortcuts** for power users
+- **Command palette** integration
+- **Explorer view** for quick access
 
-API Vault 2.0 introduces syncing capabilities:
-- API key names are synced across all your VS Code instances
-- Key values remain secure in your local system keychain
-- Enable VS Code Settings Sync to automatically sync key names
-- Access your keys from any device while maintaining security
+## 🎮 Getting Started
 
-## Usage
+1. Install API Vault from the VS Code Marketplace
+2. Click the vault icon in the Activity Bar
+3. Start adding your API keys!
 
-### Opening API Vault
-- Click the API icon in the Activity Bar (left sidebar)
-- The API Vault panel will open, showing all your stored keys
-- Alternatively, use the Command Palette (Cmd+Shift+P / Ctrl+Shift+P) and search for "API Vault"
+## ⌨️ Commands
 
-### Storing a New API Key
-1. In the API Vault panel, find the "Store New API Key" section at the top
-2. Enter the key name (e.g., "GITHUB_TOKEN")
-3. Enter the API key value
-4. Click "Store Key"
-5. The key name will sync across your VS Code instances
+- `API Vault: Store Key` - Add a new API key
+- `API Vault: Get Key` - Retrieve and copy a key
+- `API Vault: List Keys` - View all stored keys
 
-Alternatively, use the Command Palette:
-1. Open Command Palette (Cmd+Shift+P / Ctrl+Shift+P)
-2. Search for "API Vault: Store New API Key"
-3. Follow the prompts to enter key name and value
+## 🛡️ Security
 
-### Viewing and Copying Stored Keys
-- All your stored keys are automatically listed in the panel
-- Click "Show/Hide" next to any key to view its value
-- Click again to hide the value
-- Use the dedicated copy button or Command Palette's "API Vault: Get API Key" to copy a key to clipboard
-- Key names are synced, but values are stored securely in your local system keychain
+API Vault uses your system's secure keychain (Keychain Access on macOS, Credential Manager on Windows, libsecret on Linux) to store your API keys. The keys are:
 
-### Managing Keys
-- Use the Command Palette's "API Vault: List API Keys" for quick key management
-- Select a key to view options for copying or deleting
-- In the Activity Bar interface, use the "Delete" button next to any key
-- Confirm the deletion when prompted
-- The deletion will sync across your VS Code instances
+- ✅ **Encrypted at rest**
+- ✅ **Protected by your system's security**
+- ✅ **Never stored in plain text**
+- ✅ **Never synced to the cloud**
 
-## Security
+## 🎯 Perfect For
 
-API Vault uses a hybrid approach for maximum security and convenience:
+- **Developers** managing multiple API keys
+- **Teams** working with various services
+- **Students** learning to use APIs
+- **Anyone** who values security and convenience
 
-### Key Names (Synced)
-- Stored using VS Code's globalState
-- Synced across instances via Settings Sync
-- No sensitive information included
+## 🆕 What's New in 3.3.0
 
-### Key Values (Secure)
-- Stored using VS Code's SecretStorage API:
-  - On macOS: System Keychain
-  - On Windows: Windows Credential Manager
-  - On Linux: System's secret service (libsecret)
-- Never synced between instances
-- Encrypted at rest
-- Only accessible within VS Code
+- ✨ **Drag-and-Drop Everything!** Reorder categories and move keys between them
+- 🎨 **Collapsible Categories** with smooth animations
+- 🔍 **Enhanced Search** for finding keys faster
+- 💅 **Polished UI** that feels native to VS Code
 
-## Commands
+## 📝 Feedback & Contributions
 
-API Vault provides convenient access through both the Activity Bar and Command Palette (Cmd+Shift+P / Ctrl+Shift+P):
+Love API Vault? Give it a ⭐️ on GitHub! Found a bug or have a feature request? [Open an issue](https://github.com/joewilson/api-vault/issues)!
 
-- `API Vault: Store New API Key` - Store a new API key with a guided prompt interface
-- `API Vault: Get API Key` - Quickly retrieve and copy a key to clipboard
-- `API Vault: List API Keys` - View and manage your stored keys with copy/delete options
+## 📜 License
 
-## Requirements
-
-- VS Code version 1.85.0 or higher
-- Settings Sync enabled (optional, for syncing key names)
-
-## Extension Settings
-
-This extension contributes no additional settings.
-
-## Known Issues
-
-None at this time.
-
-## Release Notes
-
-### 2.0.7
-- Reverted to original icon for consistent branding
-- Optimized icon display in Activity Bar
-
-### 2.0.6
-- Updated Activity Bar icon for improved visibility
-- Refined visual appearance in the sidebar
-
-### 2.0.5
-- Updated extension icon for better visibility in the Activity Bar
-- Enhanced visual consistency across the extension
-
-### 2.0.4
-- Added dedicated copy button with icon for each API key
-- Enhanced UI with visual feedback when copying keys
-- Improved accessibility for copying API keys
-
-### 2.0.3
-- Fixed Command Palette integration
-- Improved sync between Activity Bar and Command Palette interfaces
-- Enhanced clipboard support for quick key copying
-- Updated documentation with comprehensive usage instructions
-
-### 2.0.2
-- Enhanced Command Palette integration
-- Added clipboard support for quick key copying
-- Improved key management through Command Palette
-- Better sync between Activity Bar and Command Palette interfaces
-
-### 2.0.0
-Major update with syncing support:
-- Added sync capability for API key names
-- Improved security with hybrid storage approach
-- Enhanced UI with sync status indicators
-- Updated documentation for sync features
-
-### 1.0.0
-Initial release of API Vault:
-- Activity Bar integration
-- Secure key storage
-- Webview interface
-- Show/Hide functionality
-- One-click deletion
-- System keychain integration
-
-## Contributing
-
-Found a bug or have a feature request? Please open an issue on our [GitHub repository](https://github.com/PoliTwit1984/VSCode-API-Vault_Extension).
-
-## License
-
-This extension is licensed under the [MIT License](LICENSE).
+MIT License - feel free to use in your own projects!

@@ -1,81 +1,102 @@
 {
-  "name": "api-vault",
-  "displayName": "API Vault",
-  "description": "A secure vault for storing and managing API keys with sync support",
-  "version": "2.0.7",
-  "icon": "API.png",
-  "publisher": "JosephDavidWilsonJr",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/PoliTwit1984/VSCode-API-Vault_Extension.git"
-  },
-  "engines": {
-    "vscode": "^1.85.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onView:apiVaultView"
-  ],
-  "main": "./out/extension.js",
-  "contributes": {
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "api-vault-sidebar",
-          "title": "API Vault",
-          "icon": "API.png"
-        }
-      ]
+    "name": "api-vault",
+    "displayName": "API Vault - Secure Key Manager",
+    "description": "🔒 Securely store and manage API keys, tokens, and secrets in VS Code. Features category organization, drag-and-drop management, and system keychain integration for maximum security.",
+    "version": "3.3.0",
+    "publisher": "joewilson",
+    "engines": {
+        "vscode": "^1.74.0"
     },
-    "views": {
-      "api-vault-sidebar": [
-        {
-          "type": "webview",
-          "id": "apiVaultView",
-          "name": "API Keys",
-          "icon": "API.png"
-        }
-      ]
+    "categories": [
+        "Security",
+        "Other",
+        "Programming Languages",
+        "Snippets",
+        "Education"
+    ],
+    "keywords": [
+        "api",
+        "keys",
+        "secrets",
+        "tokens",
+        "security",
+        "credentials",
+        "password",
+        "secure storage",
+        "keychain",
+        "api keys",
+        "token manager",
+        "secret manager",
+        "key vault",
+        "authentication"
+    ],
+    "galleryBanner": {
+        "color": "#1e1e1e",
+        "theme": "dark"
     },
-    "commands": [
-      {
-        "command": "api-vault.storeKey",
-        "title": "Store New API Key",
-        "category": "API Vault"
-      },
-      {
-        "command": "api-vault.listKeys",
-        "title": "List API Keys",
-        "category": "API Vault"
-      },
-      {
-        "command": "api-vault.getKey",
-        "title": "Get API Key",
-        "category": "API Vault"
-      }
-    ]
-  },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
-  },
-  "devDependencies": {
-    "@types/glob": "^8.1.0",
-    "@types/mocha": "^10.0.1",
-    "@types/node": "^16.x",
-    "@types/vscode": "^1.85.0",
-    "@typescript-eslint/eslint-plugin": "^6.15.0",
-    "@typescript-eslint/parser": "^6.15.0",
-    "@vscode/test-electron": "^2.3.8",
-    "eslint": "^8.56.0",
-    "glob": "^8.1.0",
-    "mocha": "^10.2.0",
-    "typescript": "^5.3.3"
-  }
+    "badges": [
+        {
+            "url": "https://img.shields.io/badge/security-system%20keychain-brightgreen",
+            "href": "https://github.com/joewilson/api-vault",
+            "description": "Uses System Keychain"
+        }
+    ],
+    "activationEvents": [],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "api-vault.storeKey",
+                "title": "API Vault: Store Key"
+            },
+            {
+                "command": "api-vault.getKey",
+                "title": "API Vault: Get Key"
+            },
+            {
+                "command": "api-vault.listKeys",
+                "title": "API Vault: List Keys"
+            }
+        ],
+        "views": {
+            "explorer": [
+                {
+                    "type": "webview",
+                    "id": "apiVaultView",
+                    "name": "API Vault"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.74.0",
+        "@types/glob": "^8.0.0",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "16.x",
+        "@typescript-eslint/eslint-plugin": "^5.45.0",
+        "@typescript-eslint/parser": "^5.45.0",
+        "eslint": "^8.28.0",
+        "glob": "^8.0.3",
+        "mocha": "^10.1.0",
+        "typescript": "^4.9.3",
+        "@vscode/test-electron": "^2.2.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/joewilson/api-vault.git"
+    },
+    "bugs": {
+        "url": "https://github.com/joewilson/api-vault/issues"
+    },
+    "homepage": "https://github.com/joewilson/api-vault#readme",
+    "icon": "api-vault.png",
+    "pricing": "Free"
 }

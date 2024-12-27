@@ -3,35 +3,45 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.run = run;
 const path = require("path");
 const Mocha = require("mocha");
-const glob_1 = require("glob");
-const util_1 = require("util");
-const globPromise = (0, util_1.promisify)(glob_1.glob);
+const glob = require("glob");
+const vscode = require("vscode");
 async function run() {
     // Create the mocha test
     const mocha = new Mocha({
         ui: 'tdd',
-        color: true
+        color: true,
+        timeout: 60000 // Increased timeout for extension operations
     });
     const testsRoot = path.resolve(__dirname, '.');
-    try {
-        const files = await globPromise('**/**.test.js', { cwd: testsRoot });
-        // Add files to the test suite
-        files.forEach(f => mocha.addFile(path.resolve(testsRoot, f)));
-        // Run the mocha test
-        return new Promise((resolve, reject) => {
-            mocha.run((failures) => {
-                if (failures > 0) {
-                    reject(new Error(`${failures} tests failed.`));
-                }
-                else {
-                    resolve();
-                }
-            });
+    // Get the extension context
+    const extension = vscode.extensions.getExtension('JosephDavidWilsonJr.api-vault');
+    if (extension) {
+        await extension.activate();
+        global.testContext = extension._extensionContext;
+    }
+    return new Promise((resolve, reject) => {
+        glob('**/**.test.js', { cwd: testsRoot }, (err, files) => {
+            if (err) {
+                return reject(err);
+            }
+            // Add files to the test suite
+            files.forEach(f => mocha.addFile(path.resolve(testsRoot, f)));
+            try {
+                // Run the mocha test
+                mocha.run(failures => {
+                    if (failures > 0) {
+                        reject(new Error(`${failures} tests failed.`));
+                    }
+                    else {
+                        resolve();
+                    }
+                });
+            }
+            catch (err) {
+                console.error(err);
+                reject(err);
+            }
         });
-    }
-    catch (err) {
-        console.error(err);
-        throw err;
-    }
+    });
 }
 //# sourceMappingURL=index.js.map
