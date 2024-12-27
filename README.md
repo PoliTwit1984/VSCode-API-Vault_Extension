@@ -67,7 +67,7 @@ API Vault uses your system's secure keychain (Keychain Access on macOS, Credenti
 
 ## 📝 Feedback & Contributions
 
-Love API Vault? Give it a ⭐️ on GitHub! Found a bug or have a feature request? [Open an issue](https://github.com/joewilson/api-vault/issues)!
+Love API Vault? Give it a ⭐️ on GitHub! Found a bug or have a feature request? [Open an issue](https://github.com/PoliTwit1984/VSCode-API-Vault_Extension/issues)!
 
 ## 📜 License
 

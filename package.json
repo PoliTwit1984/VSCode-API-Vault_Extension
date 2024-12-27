@@ -37,7 +37,7 @@
     "badges": [
         {
             "url": "https://img.shields.io/badge/security-system%20keychain-brightgreen",
-            "href": "https://github.com/joewilson/api-vault",
+            "href": "https://github.com/PoliTwit1984/VSCode-API-Vault_Extension",
             "description": "Uses System Keychain"
         }
     ],
@@ -91,12 +91,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/joewilson/api-vault.git"
+        "url": "https://github.com/PoliTwit1984/VSCode-API-Vault_Extension.git"
     },
     "bugs": {
-        "url": "https://github.com/joewilson/api-vault/issues"
+        "url": "https://github.com/PoliTwit1984/VSCode-API-Vault_Extension/issues"
     },
-    "homepage": "https://github.com/joewilson/api-vault#readme",
+    "homepage": "https://github.com/PoliTwit1984/VSCode-API-Vault_Extension#readme",
     "icon": "api-vault.png",
     "pricing": "Free"
 }
