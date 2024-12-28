@@ -154,6 +154,30 @@ suite('API Vault Extension Test Suite', () => {
         assert.strictEqual(keys[0].category, undefined);
     });
 
+    test('Category expansion state is preserved', async () => {
+        // Create a category
+        const category = 'Test Category';
+        await storage.createCategory(category);
+
+        // Verify initial expanded state
+        let categories = await storage.getCategories();
+        assert.strictEqual(categories[0].expanded, true);
+
+        // Toggle category closed
+        await storage.toggleCategory(category);
+        categories = await storage.getCategories();
+        assert.strictEqual(categories[0].expanded, false);
+
+        // Verify state is preserved after refresh
+        const refreshedCategories = await storage.getCategories();
+        assert.strictEqual(refreshedCategories[0].expanded, false);
+
+        // Toggle category open
+        await storage.toggleCategory(category);
+        categories = await storage.getCategories();
+        assert.strictEqual(categories[0].expanded, true);
+    });
+
     test('Store duplicate key updates existing key', async () => {
         const key = 'TEST_KEY';
         const value1 = 'test-value-1';

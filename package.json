@@ -1,8 +1,8 @@
 {
     "name": "api-vault",
     "displayName": "API Vault - Secure Key Manager",
-    "description": "🔒 Securely store and manage API keys, tokens, and secrets in VS Code. Features category organization, drag-and-drop management, and system keychain integration for maximum security.",
-    "version": "3.3.0",
+    "description": "🔒 Your secure API key manager with an intuitive interface right in VS Code. Organize keys in collapsible categories, drag-and-drop management, instant search, and system keychain security.",
+    "version": "4.0.0",
     "publisher": "joewilson",
     "engines": {
         "vscode": "^1.74.0"
@@ -28,7 +28,13 @@
         "token manager",
         "secret manager",
         "key vault",
-        "authentication"
+        "authentication",
+        "key management",
+        "development tools",
+        "productivity",
+        "organization",
+        "workspace",
+        "developer tools"
     ],
     "galleryBanner": {
         "color": "#1e1e1e",
@@ -58,8 +64,17 @@
                 "title": "API Vault: List Keys"
             }
         ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "api-vault",
+                    "title": "API Vault",
+                    "icon": "$(shield)"
+                }
+            ]
+        },
         "views": {
-            "explorer": [
+            "api-vault": [
                 {
                     "type": "webview",
                     "id": "apiVaultView",

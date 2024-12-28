@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.activate = activate;
-exports.deactivate = deactivate;
+exports.deactivate = exports.activate = void 0;
 const vscode = require("vscode");
 const storage_1 = require("./storage");
 const provider_1 = require("./webview/provider");
@@ -18,7 +17,9 @@ function activate(context) {
     // Register commands
     (0, commands_1.registerCommands)(context, storage, provider);
 }
+exports.activate = activate;
 function deactivate() {
     provider = undefined;
 }
+exports.deactivate = deactivate;
 //# sourceMappingURL=extension.js.map

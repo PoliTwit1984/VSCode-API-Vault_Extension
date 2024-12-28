@@ -1,10 +1,20 @@
 # 🔒 API Vault
 
-**Never leave VS Code to find your API keys again!** API Vault is your secure, convenient key manager that lives right in your favorite editor.
+**Manage your API keys with style!** API Vault brings a beautiful, intuitive interface right into VS Code, making it easier than ever to organize and access your API keys.
 
 ![API Vault Demo](api-vault.png)
 
-## ✨ Features
+## ✨ What's New in 4.0
+
+We've completely redesigned API Vault to provide the best possible experience:
+
+- 🎨 **Beautiful New Interface** - A joy to use, right in your editor
+- 📁 **Smart Categories** - Organize keys your way with smooth collapsible sections
+- 🎯 **Drag & Drop** - Effortlessly organize keys and categories
+- 🔍 **Lightning-Fast Search** - Find any key instantly
+- 💅 **Native Feel** - Perfectly integrated with VS Code
+
+## 🚀 Features
 
 ### 🎯 Everything Where You Need It
 - **Access keys instantly** without switching contexts
@@ -18,13 +28,13 @@
 - **No cloud sync** - your keys stay on your machine
 - Follows security best practices
 
-### 🎨 Powerful Organization
-- **Drag-and-drop** keys between categories
-- **Collapsible categories** for better overview
+### 🎨 Smart Organization
+- **Collapsible categories** for a clean workspace
+- **Drag-and-drop** keys and categories anywhere
 - **Custom categories** for perfect organization
-- **Reorder everything** just the way you like it
+- **Visual management** that makes sense
 
-### 🚀 Seamless Integration
+### 🚀 Perfect Integration
 - **Native VS Code UI** - feels right at home
 - **Keyboard shortcuts** for power users
 - **Command palette** integration
@@ -57,13 +67,6 @@ API Vault uses your system's secure keychain (Keychain Access on macOS, Credenti
 - **Teams** working with various services
 - **Students** learning to use APIs
 - **Anyone** who values security and convenience
-
-## 🆕 What's New in 3.3.0
-
-- ✨ **Drag-and-Drop Everything!** Reorder categories and move keys between them
-- 🎨 **Collapsible Categories** with smooth animations
-- 🔍 **Enhanced Search** for finding keys faster
-- 💅 **Polished UI** that feels native to VS Code
 
 ## 📝 Feedback & Contributions
 

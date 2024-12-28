@@ -1,65 +1,64 @@
-# Build output
-out/
-dist/
-*.vsix
-
 # Dependencies
 node_modules/
-.pnpm-store/
+.pnp/
+.pnp.js
+
+# Build outputs
+out/
+dist/
+build/
+*.vsix
 
 # VS Code specific
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/
+.vscode-test/
+*.vsix
+.history/
 
 # TypeScript
 *.tsbuildinfo
 
 # Logs
-logs/
+logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Test coverage
-coverage/
-.nyc_output/
-
-# Cache directories
-.npm/
-.eslintcache
-.parcel-cache/
-.cache/
-
 # Environment variables
 .env
 .env.local
 .env.*.local
-.env.test
-.env.production
 
-# System files
-.DS_Store
-Thumbs.db
-Desktop.ini
-
-# Editor directories and files
+# IDE
 .idea/
 *.swp
 *.swo
-*~
 
-# Temporary files
-*.tmp
-*.temp
-.history/
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# Package files
+# Test coverage
+coverage/
+.nyc_output/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
 *.tgz
-.yarn-integrity
 
-# Debug
-.debug/
+# Yarn Integrity file
+.yarn-integrity

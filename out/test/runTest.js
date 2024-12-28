@@ -15,7 +15,7 @@ async function main() {
         const vscodeExecutablePath = await (0, test_electron_1.downloadAndUnzipVSCode)();
         const [cliPath, ...args] = (0, test_electron_1.resolveCliArgsFromVSCodeExecutablePath)(vscodeExecutablePath);
         // Use cp.spawn to create a new process
-        cp.spawnSync(cliPath, [...args, '--install-extension', path.join(extensionDevelopmentPath, 'api-vault-2.0.9.vsix')], {
+        cp.spawnSync(cliPath, [...args, '--install-extension', path.join(extensionDevelopmentPath, 'api-vault-3.3.0.vsix')], {
             encoding: 'utf-8',
             stdio: 'inherit'
         });

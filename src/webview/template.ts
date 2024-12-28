@@ -152,8 +152,8 @@ const styles = `
         width: 16px;
         height: 16px;
     }
-    .category-content:not(.expanded) + .category-header .category-chevron {
-        transform: rotate(-90deg);
+    .category-wrapper {
+        position: relative;
     }
     .category-header:hover {
         background: var(--vscode-list-hoverBackground);
@@ -193,7 +193,7 @@ const chevronIcon = `
     </svg>
 `;
 
-const getRowHtml = (key: KeyData) => `
+const getRowHtml = (key: KeyData, categories: any[]) => `
     <td>
         <div class="key-name">${key.name}</div>
         <div id="value-${key.name}" class="key-value"></div>
@@ -211,7 +211,7 @@ const getRowHtml = (key: KeyData) => `
         </button>
         <select class="category-select" onchange="updateKeyCategory('${key.name}', this.value)" title="Category">
             <option value="">No Category</option>
-            \${getCategoryOptions(key.category)}
+            ${categories.map(cat => `<option value="${cat.name}" ${cat.name === key.category ? 'selected' : ''}>${cat.name}</option>`).join('')}
         </select>
         <button class="icon-button" onclick="deleteKey('${key.name}')" title="Delete">
             <svg width="16" height="16" viewBox="0 0 16 16">
@@ -267,9 +267,9 @@ export function getWebviewContent(): string {
                 
                 <div id="categorizedKeys"></div>
                 
-                <div id="uncategorizedKeys">
+                <div id="uncategorizedKeys" class="category-section" data-category="uncategorized">
                     <div class="category-header">
-                        <div class="category-header-left" onclick="toggleCategory('uncategorized')">
+                        <div class="category-header-left" onclick="event.stopPropagation(); toggleCategory('uncategorized')">
                             <span class="category-chevron">
                                 ${chevronIcon}
                             </span>
@@ -332,17 +332,31 @@ export function getWebviewContent(): string {
             }
 
             function toggleCategory(name) {
-                const content = document.querySelector(\`.category-\${name} .category-content\`);
-                if (content) {
-                    content.classList.toggle('expanded');
-                    const chevron = content.previousElementSibling?.querySelector('.category-chevron');
-                    if (chevron) {
-                        chevron.style.transform = content.classList.contains('expanded') ? 'rotate(0deg)' : 'rotate(-90deg)';
+                console.log('[Webview] Toggling category:', name);
+                const section = document.querySelector(\`[data-category="\${name}"]\`);
+                console.log('[Webview] Found section:', section?.outerHTML);
+                
+                if (section) {
+                    const content = section.querySelector('.category-content');
+                    const chevron = section.querySelector('.category-chevron');
+                    console.log('[Webview] Found content:', content?.outerHTML);
+                    console.log('[Webview] Found chevron:', chevron?.outerHTML);
+                    
+                    if (content) {
+                        const wasExpanded = content.classList.contains('expanded');
+                        content.classList.toggle('expanded');
+                        const isExpanded = content.classList.contains('expanded');
+                        console.log('[Webview] Content expanded state:', wasExpanded, '->', isExpanded);
+                        
+                        // Always rotate chevron based on expanded state
+                        chevron.style.transform = isExpanded ? '' : 'rotate(-90deg)';
+                        console.log('[Webview] Setting chevron rotation:', chevron.style.transform);
+                        
+                        vscode.postMessage({
+                            command: 'toggleCategory',
+                            name: name
+                        });
                     }
-                    vscode.postMessage({
-                        command: 'toggleCategory',
-                        name: name
-                    });
                 }
             }
 
@@ -544,7 +558,7 @@ export function getWebviewContent(): string {
                         categories.forEach(category => {
                             const keys = categorizedKeys[category.name] || [];
                             const section = document.createElement('div');
-                            section.className = \`category-\${category.name}\`;
+                            section.className = 'category-section';
                             section.dataset.category = category.name;
                             section.innerHTML = \`
                                 <div class="category-header" draggable="true">
@@ -565,7 +579,7 @@ export function getWebviewContent(): string {
                                         <tbody>
                                             \${keys.map(key => \`
                                                 <tr draggable="true" data-key="\${key.name}">
-                                                    \${getRowHtml(key)}
+                                                    \${getRowHtml(key, categories)}
                                                 </tr>
                                             \`).join('')}
                                         </tbody>
@@ -581,7 +595,7 @@ export function getWebviewContent(): string {
                             '<tr><td colspan="2">No uncategorized keys.</td></tr>' : 
                             uncategorizedKeys.map(key => \`
                                 <tr draggable="true" data-key="\${key.name}">
-                                    \${getRowHtml(key)}
+                                    \${getRowHtml(key, categories)}
                                 </tr>
                             \`).join('');
                         
@@ -591,9 +605,10 @@ export function getWebviewContent(): string {
                         
                         // Update chevron rotations
                         document.querySelectorAll('.category-content').forEach(content => {
+                            const isExpanded = content.classList.contains('expanded');
                             const chevron = content.previousElementSibling?.querySelector('.category-chevron');
                             if (chevron) {
-                                chevron.style.transform = content.classList.contains('expanded') ? 'rotate(0deg)' : 'rotate(-90deg)';
+                                chevron.style.transform = isExpanded ? '' : 'rotate(-90deg)';
                             }
                         });
                         

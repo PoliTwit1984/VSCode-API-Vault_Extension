@@ -22,7 +22,7 @@ async function main() {
 		const [cliPath, ...args] = resolveCliArgsFromVSCodeExecutablePath(vscodeExecutablePath);
 
 		// Use cp.spawn to create a new process
-		cp.spawnSync(cliPath, [...args, '--install-extension', path.join(extensionDevelopmentPath, 'api-vault-2.0.9.vsix')], {
+		cp.spawnSync(cliPath, [...args, '--install-extension', path.join(extensionDevelopmentPath, 'api-vault-3.3.0.vsix')], {
 			encoding: 'utf-8',
 			stdio: 'inherit'
 		});
