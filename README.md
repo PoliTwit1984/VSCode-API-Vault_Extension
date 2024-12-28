@@ -2,7 +2,15 @@
 
 **Manage your API keys with style!** API Vault brings a beautiful, intuitive interface right into VS Code, making it easier than ever to organize and access your API keys.
 
-![API Vault Demo](api-vault.png)
+![API Vault Demo](api-vault-demo.png)
+
+### 🎯 Organized & Secure
+Keep your API keys neatly organized in collapsible categories:
+- 🌥️ Cloud Services (AWS, Azure)
+- 💳 Payment APIs (Stripe, PayPal)
+- 🔗 Social Media (Twitter, Facebook)
+- 🤖 AI & ML (OpenAI, HuggingFace)
+- 🛠️ Development Tools (GitHub, GitLab)
 
 ## ✨ What's New in 4.0
 

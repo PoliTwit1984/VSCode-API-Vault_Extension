@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { StorageManager, CommandRegistry } from './types';
 import { APIVaultWebviewProvider } from './webview/provider';
+import { populateDemoData } from './test/populate-demo-data';
 
 export function registerCommands(
     context: vscode.ExtensionContext,
@@ -8,6 +9,15 @@ export function registerCommands(
     provider: APIVaultWebviewProvider
 ): void {
     const commands: CommandRegistry = {
+        'api-vault.populateDemoData': async () => {
+            try {
+                await populateDemoData(context);
+                provider.refreshKeys();
+                vscode.window.showInformationMessage('Demo data populated successfully!');
+            } catch (error) {
+                vscode.window.showErrorMessage(`Failed to populate demo data: ${(error as Error).message}`);
+            }
+        },
         'api-vault.storeKey': async (key?: string, value?: string) => {
             if (!key || !value) {
                 key = await vscode.window.showInputBox({ 

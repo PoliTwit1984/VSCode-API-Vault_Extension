@@ -1,5 +1,11 @@
 # Change Log
 
+## [4.0.1] - 2023-12-27
+### Updated
+- 📸 Enhanced marketplace presentation with new screenshots
+- 📝 Improved documentation with detailed category examples
+- ✨ Added demo data population feature for easy testing
+
 ## [4.0.0] - 2023-12-27
 ### Added
 - 🎨 Beautiful new interface with improved usability
