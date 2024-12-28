@@ -3,16 +3,14 @@
     "displayName": "API Vault - Secure Key Manager",
     "description": "🔒 Your secure API key manager with an intuitive interface right in VS Code. Organize keys in collapsible categories, drag-and-drop management, instant search, and system keychain security.",
     "version": "4.0.0",
-    "publisher": "joewilson",
+    "publisher": "josephdavidwilsonjr",
     "engines": {
         "vscode": "^1.74.0"
     },
     "categories": [
-        "Security",
         "Other",
         "Programming Languages",
-        "Snippets",
-        "Education"
+        "Snippets"
     ],
     "keywords": [
         "api",
@@ -69,7 +67,7 @@
                 {
                     "id": "api-vault",
                     "title": "API Vault",
-                    "icon": "$(shield)"
+                    "icon": "API.png"
                 }
             ]
         },
@@ -112,6 +110,6 @@
         "url": "https://github.com/PoliTwit1984/VSCode-API-Vault_Extension/issues"
     },
     "homepage": "https://github.com/PoliTwit1984/VSCode-API-Vault_Extension#readme",
-    "icon": "api-vault.png",
+    "icon": "API.png",
     "pricing": "Free"
 }

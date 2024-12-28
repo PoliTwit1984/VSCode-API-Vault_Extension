@@ -62,3 +62,6 @@ coverage/
 
 # Yarn Integrity file
 .yarn-integrity
+
+# Ignore all node_modules content
+node_modules/**/*
