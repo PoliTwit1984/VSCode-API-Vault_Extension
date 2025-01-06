@@ -1,11 +1,27 @@
 import * as vscode from 'vscode';
-import { KeyData, CategoryData, StorageManager } from './types';
+import * as crypto from 'crypto';
+import { 
+    KeyData, 
+    CategoryData, 
+    StorageManager, 
+    ExternalAccessToken,
+    ExternalKeyRequest,
+    ExternalKeyResponse,
+    ExternalListRequest,
+    ExternalListResponse
+} from './types';
 
 export class VSCodeStorageManager implements StorageManager {
+    private activeTokens: Map<string, ExternalAccessToken>;
     constructor(
         private readonly secretStorage: vscode.SecretStorage,
         private readonly globalState: vscode.Memento
-    ) {}
+    ) {
+        // Initialize tokens from global state
+        this.activeTokens = new Map(
+            Object.entries(this.globalState.get<Record<string, ExternalAccessToken>>('api-vault-tokens', {}))
+        );
+    }
 
     async getKeys(): Promise<KeyData[]> {
         return this.globalState.get<KeyData[]>('api-vault-keys', []);
@@ -107,5 +123,76 @@ export class VSCodeStorageManager implements StorageManager {
 
     async getValue(key: string): Promise<string | undefined> {
         return await this.secretStorage.get(key);
+    }
+
+    // External access methods
+    async generateAccessToken(): Promise<ExternalAccessToken> {
+        // Generate a secure random token
+        const token = crypto.randomBytes(32).toString('hex');
+        
+        // Create token with read-only permissions (no expiration)
+        const accessToken: ExternalAccessToken = {
+            token,
+            expiresAt: Number.MAX_SAFE_INTEGER, // Never expires
+            permissions: ['read']
+        };
+
+        // Store token in memory and persist to global state
+        this.activeTokens.set(token, accessToken);
+        await this.globalState.update('api-vault-tokens', 
+            Object.fromEntries(this.activeTokens.entries())
+        );
+
+        return accessToken;
+    }
+
+    async validateToken(token: string): Promise<boolean> {
+        // For personal use, just check if the token exists
+        return this.activeTokens.has(token);
+    }
+
+    async handleExternalKeyRequest(request: ExternalKeyRequest): Promise<ExternalKeyResponse> {
+        try {
+            // Get key value
+            const value = await this.getValue(request.keyName);
+            if (!value) {
+                return {
+                    success: false,
+                    error: `Key "${request.keyName}" not found`
+                };
+            }
+
+            return {
+                success: true,
+                value
+            };
+        } catch (error) {
+            return {
+                success: false,
+                error: `Error retrieving key: ${(error as Error).message}`
+            };
+        }
+    }
+
+    async handleExternalListRequest(request: ExternalListRequest): Promise<ExternalListResponse> {
+        try {
+            // Get keys
+            const keys = await this.getKeys();
+            
+            // Filter by category if specified
+            const filteredKeys = request.category ? 
+                keys.filter(k => k.category === request.category) : 
+                keys;
+
+            return {
+                success: true,
+                keys: filteredKeys
+            };
+        } catch (error) {
+            return {
+                success: false,
+                error: `Error listing keys: ${(error as Error).message}`
+            };
+        }
     }
 }

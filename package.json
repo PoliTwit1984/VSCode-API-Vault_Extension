@@ -2,7 +2,7 @@
     "name": "api-vault",
     "displayName": "API Vault - Secure Key Manager",
     "description": "🔒 Your secure API key manager with an intuitive interface right in VS Code. Organize keys in collapsible categories, drag-and-drop management, instant search, and system keychain security.",
-    "version": "4.0.1",
+    "version": "5.4.0",
     "publisher": "josephdavidwilsonjr",
     "engines": {
         "vscode": "^1.74.0"
@@ -45,9 +45,31 @@
             "description": "Uses System Keychain"
         }
     ],
-    "activationEvents": [],
+    "activationEvents": [
+        "onCommand:api-vault.storeKey",
+        "onCommand:api-vault.getKey",
+        "onCommand:api-vault.listKeys",
+        "onCommand:api-vault.populateDemoData",
+        "onCommand:api-vault.generateAccessToken",
+        "onCommand:api-vault.exposeExternalAccess",
+        "onCommand:api-vault.configurePort",
+        "onCommand:api-vault.disableExternalAccess",
+        "onStartupFinished"
+    ],
     "main": "./out/extension.js",
     "contributes": {
+        "configuration": {
+            "title": "API Vault",
+            "properties": {
+                "apiVault.externalPort": {
+                    "type": "number",
+                    "default": 8000,
+                    "minimum": 1024,
+                    "maximum": 65535,
+                    "description": "Port number for external access server"
+                }
+            }
+        },
         "commands": [
             {
                 "command": "api-vault.storeKey",
@@ -64,6 +86,22 @@
             {
                 "command": "api-vault.populateDemoData",
                 "title": "API Vault: Populate Demo Data"
+            },
+            {
+                "command": "api-vault.generateAccessToken",
+                "title": "API Vault: Generate Access Token"
+            },
+            {
+                "command": "api-vault.exposeExternalAccess",
+                "title": "API Vault: Enable External Access"
+            },
+            {
+                "command": "api-vault.configurePort",
+                "title": "API Vault: Configure External Access Port"
+            },
+            {
+                "command": "api-vault.disableExternalAccess",
+                "title": "API Vault: Disable External Access"
             }
         ],
         "viewsContainers": {

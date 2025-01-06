@@ -1,85 +1,166 @@
-# 🔒 API Vault
+# API Vault (v5.4.0)
 
-**Manage your API keys with style!** API Vault brings a beautiful, intuitive interface right into VS Code, making it easier than ever to organize and access your API keys.
+A VS Code extension for secure API key management with external access capabilities and MCP integration. Provides natural language API key retrieval through the MCP tab in VS Code.
 
-![API Vault Demo](api-vault-demo.png)
+## Features
 
-### 🎯 Organized & Secure
-Keep your API keys neatly organized in collapsible categories:
-- 🌥️ Cloud Services (AWS, Azure)
-- 💳 Payment APIs (Stripe, PayPal)
-- 🔗 Social Media (Twitter, Facebook)
-- 🤖 AI & ML (OpenAI, HuggingFace)
-- 🛠️ Development Tools (GitHub, GitLab)
+- 🔒 Secure key storage using system keychain
+- 🔑 External access server with token-based authentication
+- 🤖 Natural language key queries with fuzzy matching
+- 📁 Category-based key organization
+- 🔄 State persistence across VS Code restarts
+- 🔌 Enhanced MCP integration with automatic token synchronization
+- 🔐 Improved token management and validation
+- 🔍 Intelligent key matching with confidence scores
+- 🚀 High-performance HTTP requests with node-fetch
+- 🛡️ Robust error handling and retry logic
 
-## ✨ What's New in 4.0
+## Security Features
 
-We've completely redesigned API Vault to provide the best possible experience:
+### 1. Key Storage Security
+- 🔐 System keychain integration for secure key storage
+- 🔒 Encrypted storage of sensitive data
+- 🛡️ Isolation from extension storage
+- 🚫 No plaintext key storage
 
-- 🎨 **Beautiful New Interface** - A joy to use, right in your editor
-- 📁 **Smart Categories** - Organize keys your way with smooth collapsible sections
-- 🎯 **Drag & Drop** - Effortlessly organize keys and categories
-- 🔍 **Lightning-Fast Search** - Find any key instantly
-- 💅 **Native Feel** - Perfectly integrated with VS Code
+### 2. Authentication & Authorization
+- 🎫 Token-based authentication for external access
+- ⏰ Automatic token refresh (30-minute intervals)
+- 🔄 Token synchronization with MCP settings
+- 🚪 Access control with bearer tokens
 
-## 🚀 Features
+### 3. Network Security
+- 🌐 CORS protection for external server
+- 🔐 HTTPS support for secure communication
+- 🛡️ Request validation and sanitization
+- 🚫 Rate limiting and request throttling
 
-### 🎯 Everything Where You Need It
-- **Access keys instantly** without switching contexts
-- **Copy with one click** directly into your code
-- **Search and filter** to find keys quickly
-- All your keys are **just a keystroke away**
+### 4. Error Handling & Recovery
+- 🔄 Exponential backoff for failed requests
+- 🛡️ Connection state management
+- 🚨 Error monitoring and reporting
+- 🔄 Automatic retry with configurable limits
 
-### 🔐 Bank-Grade Security
-- Keys are stored in your **system's secure keychain**
-- **Zero plain-text storage** - everything is encrypted
-- **No cloud sync** - your keys stay on your machine
-- Follows security best practices
+### 5. Data Protection
+- 🔒 Input validation and sanitization
+- 🛡️ Protection against injection attacks
+- 🚫 No sensitive data in logs
+- 🔐 Secure error messages
 
-### 🎨 Smart Organization
-- **Collapsible categories** for a clean workspace
-- **Drag-and-drop** keys and categories anywhere
-- **Custom categories** for perfect organization
-- **Visual management** that makes sense
+### 6. MCP Security
+- 🔑 Automatic external server management
+- 🔒 Token validation with retry mechanism
+- 🛡️ Connection pooling and state management
+- 🚫 Secure token transmission
 
-### 🚀 Perfect Integration
-- **Native VS Code UI** - feels right at home
-- **Keyboard shortcuts** for power users
-- **Command palette** integration
-- **Explorer view** for quick access
+## Getting Started
 
-## 🎮 Getting Started
+1. Install the extension
+2. Use the command palette (`Cmd/Ctrl + Shift + P`) to:
+   - Add API keys: `API Vault: Add Key`
+   - List keys: `API Vault: List Keys`
+   - Enable external access: `API Vault: Enable External Access`
+   - Generate access token: `API Vault: Generate Access Token`
 
-1. Install API Vault from the VS Code Marketplace
-2. Click the vault icon in the Activity Bar
-3. Start adding your API keys!
+## External Access
 
-## ⌨️ Commands
+The extension provides an HTTP server for external access to your API keys:
 
-- `API Vault: Store Key` - Add a new API key
-- `API Vault: Get Key` - Retrieve and copy a key
-- `API Vault: List Keys` - View all stored keys
+1. Enable external access using the command palette
+2. Generate an access token
+3. Use the token to authenticate requests to `http://localhost:8000`
 
-## 🛡️ Security
+Example using curl:
+```bash
+# List all keys
+curl -X POST http://localhost:8000/list \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"requestId": "1"}'
 
-API Vault uses your system's secure keychain (Keychain Access on macOS, Credential Manager on Windows, libsecret on Linux) to store your API keys. The keys are:
+# Get a specific key using natural language
+curl -X POST http://localhost:8000/key \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "requestId": "2",
+    "query": "I need the OpenRouter API key"
+  }'
+```
 
-- ✅ **Encrypted at rest**
-- ✅ **Protected by your system's security**
-- ✅ **Never stored in plain text**
-- ✅ **Never synced to the cloud**
+## MCP Integration
 
-## 🎯 Perfect For
+API Vault provides two MCP tools for API key management:
 
-- **Developers** managing multiple API keys
-- **Teams** working with various services
-- **Students** learning to use APIs
-- **Anyone** who values security and convenience
+1. `get_api_key`: Retrieve API keys using natural language
+   ```typescript
+   {
+     "query": "Get the OpenRouter API key"  // Returns the key with confidence score
+   }
+   ```
 
-## 📝 Feedback & Contributions
+2. `list_keys`: List all available keys with optional category filtering
+   ```typescript
+   {
+     "query": "Show LLM keys"  // Optional category filter
+   }
+   ```
 
-Love API Vault? Give it a ⭐️ on GitHub! Found a bug or have a feature request? [Open an issue](https://github.com/PoliTwit1984/VSCode-API-Vault_Extension/issues)!
+Features:
+- Natural language key queries with fuzzy matching and confidence scores
+- Category-based filtering and organization
+- Secure key retrieval with token-based authentication
+- Automatic token synchronization with VS Code settings
+- Robust error handling with automatic retries
+- High-performance HTTP requests using node-fetch
+- IPv4/IPv6 compatibility for improved connectivity
 
-## 📜 License
+The MCP server automatically starts with VS Code and handles:
+- External server management for API key access
+- Token validation and refresh
+- Secure key storage and retrieval
+- Natural language processing for key queries
 
-MIT License - feel free to use in your own projects!
+See `mcp.md` for detailed MCP documentation.
+
+## Project Structure
+
+```
+api-vault/
+├── src/                    # Extension source code
+│   ├── commands.ts        # VS Code commands
+│   ├── extension.ts       # Extension entry point
+│   ├── external-server.ts # External access server
+│   ├── storage.ts         # Key storage management
+│   ├── types.ts          # TypeScript types
+│   └── key-manager.ts    # MCP key management
+├── test/                  # Test files
+│   └── suite/            # Test suites
+│       ├── extension.test.ts    # Extension tests
+│       ├── external-access.test.ts # External access tests
+│       └── testUtils.ts  # Test utilities
+└── docs/                  # Documentation
+```
+
+## Development
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Build: `npm run compile`
+4. Run tests: `npm test`
+
+See `project_plan.md` for current status and roadmap.
+
+## Known Issues
+
+See `errors_next_steps.md` for current issues and planned fixes.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Submit a pull request
+
+## License
+
+MIT

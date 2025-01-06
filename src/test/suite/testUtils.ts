@@ -1,5 +1,14 @@
 import * as vscode from 'vscode';
-import { StorageManager, KeyData, CategoryData } from '../../types';
+import { 
+    StorageManager, 
+    KeyData, 
+    CategoryData,
+    ExternalAccessToken,
+    ExternalKeyRequest,
+    ExternalKeyResponse,
+    ExternalListRequest,
+    ExternalListResponse
+} from '../../types';
 
 export class MockStorageManager implements StorageManager {
     private keys: Map<string, string> = new Map();
@@ -86,6 +95,58 @@ export class MockStorageManager implements StorageManager {
 
     async getValue(key: string): Promise<string | undefined> {
         return this.keys.get(key);
+    }
+
+    // External access methods
+    private activeTokens: Map<string, ExternalAccessToken> = new Map();
+
+    async generateAccessToken(): Promise<ExternalAccessToken> {
+        const token: ExternalAccessToken = {
+            token: `test-token-${Date.now()}`,
+            expiresAt: Date.now() + 1000, // 1 second expiry for tests
+            permissions: ['read']
+        };
+        this.activeTokens.set(token.token, token);
+        return token;
+    }
+
+    async validateToken(token: string): Promise<boolean> {
+        const accessToken = this.activeTokens.get(token);
+        if (!accessToken) {
+            return false;
+        }
+        if (Date.now() > accessToken.expiresAt) {
+            this.activeTokens.delete(token);
+            return false;
+        }
+        return true;
+    }
+
+    async handleExternalKeyRequest(request: ExternalKeyRequest): Promise<ExternalKeyResponse> {
+        const value = await this.getValue(request.keyName);
+        if (!value) {
+            return {
+                success: false,
+                error: `Key "${request.keyName}" not found`
+            };
+        }
+
+        return {
+            success: true,
+            value
+        };
+    }
+
+    async handleExternalListRequest(request: ExternalListRequest): Promise<ExternalListResponse> {
+        const keys = await this.getKeys();
+        const filteredKeys = request.category ? 
+            keys.filter(k => k.category === request.category) : 
+            keys;
+
+        return {
+            success: true,
+            keys: filteredKeys
+        };
     }
 }
 
