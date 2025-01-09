@@ -1,6 +1,0 @@
-New Extension (TypeScript)
-api-vault
-A secure vault for storing and managing API keys
-Joe Wilson
-yes
-git+https://github.com/joewilson/vscode-api-vault.git
