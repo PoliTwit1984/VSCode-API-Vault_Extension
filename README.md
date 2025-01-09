@@ -80,6 +80,15 @@ API Vault uses your system's secure keychain (Keychain Access on macOS, Credenti
 
 Love API Vault? Give it a ⭐️ on GitHub! Found a bug or have a feature request? [Open an issue](https://github.com/PoliTwit1984/VSCode-API-Vault_Extension/issues)!
 
+## 🌟 Share the Love
+
+If API Vault has made your development workflow easier, consider sharing it with your fellow developers:
+- Share on [Twitter](https://twitter.com/intent/tweet?text=Check%20out%20API%20Vault%20for%20VS%20Code!%20The%20most%20beautiful%20and%20secure%20way%20to%20manage%20your%20API%20keys%20right%20in%20your%20editor%20%F0%9F%94%90%20https://marketplace.visualstudio.com/items?itemName=PoliTwit1984.api-vault)
+- Share on [LinkedIn](https://www.linkedin.com/sharing/share-offsite/?url=https://marketplace.visualstudio.com/items?itemName=PoliTwit1984.api-vault)
+- Tell your team about it!
+
+Every share helps more developers discover a better way to manage their API keys.
+
 ## 📜 License
 
 MIT License - feel free to use in your own projects!
