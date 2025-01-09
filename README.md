@@ -232,6 +232,20 @@ See `errors_next_steps.md` for current issues and planned fixes.
 2. Create a feature branch
 3. Submit a pull request
 
+## Share & Support
+
+Love API Vault? Help us grow! 🚀
+
+- ⭐ Star this repository on GitHub
+- 📢 Share your experience on Twitter/X, LinkedIn, or your favorite social platform
+- 👥 Tell your colleagues about it
+- 🐛 Found a bug? Open an issue
+- 💡 Have an idea? Start a discussion
+- 📝 Write about it in your blog or Medium
+- 🌟 Rate it in the VS Code Marketplace
+
+Your support helps make API Vault better for everyone!
+
 ## License
 
 MIT
