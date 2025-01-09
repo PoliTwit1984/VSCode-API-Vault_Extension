@@ -65,3 +65,4 @@ coverage/
 
 # Ignore all node_modules content
 node_modules/**/*
+responses.txt
