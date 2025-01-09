@@ -12,6 +12,14 @@
 > 
 > We recommend carefully evaluating your security requirements before using this feature with sensitive API keys.
 
+> ⚠️ **IMPORTANT INSTALLATION REQUIREMENT**
+> 
+> Version 5.x of API Vault requires both components to be installed and configured:
+> 1. The VS Code extension (API Vault)
+> 2. The MCP server (configured in either Claude Desktop or Cline)
+> 
+> Please ensure both components are properly set up for the extension to function correctly.
+
 Say goodbye to insecure API key storage! API Vault is your fortress for API keys, providing military-grade security with an intuitive interface. This VS Code extension offers secure key management, natural language retrieval, and seamless external access capabilities.
 
 ![API Vault Interface](api-vault-ui.png)
@@ -139,6 +147,52 @@ The MCP server automatically manages:
 - Natural language processing
 
 See `mcp.md` for detailed MCP documentation.
+
+## Installing the MCP Server
+
+To use API Vault's MCP capabilities, you'll need to configure the MCP server in either Claude Desktop or Cline:
+
+### Claude Desktop
+
+1. Open Claude Desktop's configuration file:
+   - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+   - Linux: `~/.config/Claude/claude_desktop_config.json`
+
+2. Add the following to the `mcpServers` object in the configuration:
+```json
+{
+  "mcpServers": {
+    "api-vault": {
+      "command": "node",
+      "args": ["/path/to/api-vault/build/server.js"],
+      "env": {}
+    }
+  }
+}
+```
+
+### Cline
+
+1. Open Cline's MCP settings file:
+   - macOS: `~/Library/Application Support/Code - Insiders/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`
+   - Windows: `%APPDATA%\Code - Insiders\User\globalStorage\saoudrizwan.claude-dev\settings\cline_mcp_settings.json`
+   - Linux: `~/.config/Code - Insiders/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`
+
+2. Add the following to the `mcpServers` object in the configuration:
+```json
+{
+  "mcpServers": {
+    "api-vault": {
+      "command": "node",
+      "args": ["/path/to/api-vault/build/server.js"],
+      "env": {}
+    }
+  }
+}
+```
+
+Replace `/path/to/api-vault` with the actual path where you've cloned and built this repository.
 
 ## Project Structure
 
