@@ -1,57 +1,74 @@
-# API Vault (v5.4.0)
+# API Vault (v5.4.0) 🔐
 
-A VS Code extension for secure API key management with external access capabilities and MCP integration. Provides natural language API key retrieval through the MCP tab in VS Code.
+> ⚠️ **IMPORTANT SECURITY NOTICE**
+> 
+> The current version of API Vault uses an MCP server to retrieve API keys from VS Code's secure storage, which means the Language Model (LLM) has access to your API keys when you request them. While the keys are stored securely, please be aware of the following:
+> 
+> - The LLM can see any API key you request through the natural language interface
+> - Exercise caution when sharing API keys with any AI system, including this one
+> - Consider using test/development API keys rather than production keys
+> - Future versions will store keys in system environment variables for enhanced security
+> - Always follow your organization's security policies regarding API key handling
+> 
+> We recommend carefully evaluating your security requirements before using this feature with sensitive API keys.
 
-## Features
+Say goodbye to insecure API key storage! API Vault is your fortress for API keys, providing military-grade security with an intuitive interface. This VS Code extension offers secure key management, natural language retrieval, and seamless external access capabilities.
 
-- 🔒 Secure key storage using system keychain
-- 🔑 External access server with token-based authentication
-- 🤖 Natural language key queries with fuzzy matching
-- 📁 Category-based key organization
-- 🔄 State persistence across VS Code restarts
-- 🔌 Enhanced MCP integration with automatic token synchronization
-- 🔐 Improved token management and validation
-- 🔍 Intelligent key matching with confidence scores
-- 🚀 High-performance HTTP requests with node-fetch
-- 🛡️ Robust error handling and retry logic
+![API Vault Interface](api-vault-ui.png)
+
+## Why API Vault? 🚀
+
+Never worry about exposing your API keys again! API Vault provides bank-level security for your sensitive credentials while making them easily accessible when you need them. With natural language queries and MCP integration, managing your API keys has never been more secure or convenient!
+
+## Core Features
+
+- 🔒 **Fort Knox-Level Security**: Your keys are encrypted and stored in the system keychain
+- 🤖 **Natural Language Magic**: Simply ask for your keys in plain English
+- 🔑 **Secure External Access**: Token-based authentication for safe external retrieval
+- 📁 **Smart Organization**: Intuitive category-based key management
+- 🔄 **Persistent & Reliable**: Your keys stay secure across VS Code restarts
+- 🔌 **Seamless Integration**: Enhanced MCP integration with automatic token sync
+- 🎯 **Intelligent Matching**: Smart key retrieval with confidence scoring
+- ⚡ **Lightning Fast**: High-performance operations with node-fetch
+- 🛡️ **Battle-tested Security**: Robust error handling and retry logic
 
 ## Security Features
 
 ### 1. Key Storage Security
-- 🔐 System keychain integration for secure key storage
-- 🔒 Encrypted storage of sensitive data
-- 🛡️ Isolation from extension storage
-- 🚫 No plaintext key storage
+- 🔐 System keychain integration for unbreakable security
+- 🔒 Military-grade encryption for sensitive data
+- 🛡️ Complete isolation from extension storage
+- 🚫 Zero plaintext storage - your keys are always encrypted
 
 ### 2. Authentication & Authorization
-- 🎫 Token-based authentication for external access
-- ⏰ Automatic token refresh (30-minute intervals)
-- 🔄 Token synchronization with MCP settings
-- 🚪 Access control with bearer tokens
+- 🎫 Secure token-based authentication
+- ⏰ Automatic token refresh every 30 minutes
+- 🔄 Seamless token synchronization
+- 🚪 Strict access control with bearer tokens
 
 ### 3. Network Security
-- 🌐 CORS protection for external server
-- 🔐 HTTPS support for secure communication
-- 🛡️ Request validation and sanitization
-- 🚫 Rate limiting and request throttling
+- 🌐 Bulletproof CORS protection
+- 🔐 Bank-grade HTTPS encryption
+- 🛡️ Advanced request validation
+- 🚫 Intelligent rate limiting
 
 ### 4. Error Handling & Recovery
-- 🔄 Exponential backoff for failed requests
-- 🛡️ Connection state management
-- 🚨 Error monitoring and reporting
-- 🔄 Automatic retry with configurable limits
+- 🔄 Smart exponential backoff
+- 🛡️ Robust connection management
+- 🚨 Comprehensive error monitoring
+- 🔄 Intelligent retry system
 
 ### 5. Data Protection
-- 🔒 Input validation and sanitization
-- 🛡️ Protection against injection attacks
-- 🚫 No sensitive data in logs
-- 🔐 Secure error messages
+- 🔒 Advanced input sanitization
+- 🛡️ Zero-tolerance for injection attacks
+- 🚫 Secure logging practices
+- 🔐 Privacy-focused error reporting
 
 ### 6. MCP Security
-- 🔑 Automatic external server management
-- 🔒 Token validation with retry mechanism
-- 🛡️ Connection pooling and state management
-- 🚫 Secure token transmission
+- 🔑 Automated server management
+- 🔒 Advanced token validation
+- 🛡️ Optimized connection pooling
+- 🚫 Encrypted token transmission
 
 ## Getting Started
 
@@ -64,7 +81,7 @@ A VS Code extension for secure API key management with external access capabilit
 
 ## External Access
 
-The extension provides an HTTP server for external access to your API keys:
+Access your keys securely from anywhere:
 
 1. Enable external access using the command palette
 2. Generate an access token
@@ -90,16 +107,16 @@ curl -X POST http://localhost:8000/key \
 
 ## MCP Integration
 
-API Vault provides two MCP tools for API key management:
+API Vault provides two powerful MCP tools:
 
-1. `get_api_key`: Retrieve API keys using natural language
+1. `get_api_key`: Natural language key retrieval
    ```typescript
    {
      "query": "Get the OpenRouter API key"  // Returns the key with confidence score
    }
    ```
 
-2. `list_keys`: List all available keys with optional category filtering
+2. `list_keys`: Smart key listing with category filtering
    ```typescript
    {
      "query": "Show LLM keys"  // Optional category filter
@@ -107,19 +124,19 @@ API Vault provides two MCP tools for API key management:
    ```
 
 Features:
-- Natural language key queries with fuzzy matching and confidence scores
-- Category-based filtering and organization
-- Secure key retrieval with token-based authentication
-- Automatic token synchronization with VS Code settings
-- Robust error handling with automatic retries
-- High-performance HTTP requests using node-fetch
-- IPv4/IPv6 compatibility for improved connectivity
+- Intelligent natural language processing
+- Smart category organization
+- Secure token-based authentication
+- Automatic token synchronization
+- Robust error handling
+- High-performance operations
+- Universal compatibility (IPv4/IPv6)
 
-The MCP server automatically starts with VS Code and handles:
-- External server management for API key access
-- Token validation and refresh
-- Secure key storage and retrieval
-- Natural language processing for key queries
+The MCP server automatically manages:
+- Secure external access
+- Token lifecycle
+- Encrypted storage
+- Natural language processing
 
 See `mcp.md` for detailed MCP documentation.
 
