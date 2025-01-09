@@ -9,6 +9,11 @@ dist/
 build/
 *.vsix
 
+# Development files
+responses.txt
+project_plan.md
+test-external-access.js
+
 # VS Code specific
 .vscode/
 .vscode-test/
@@ -17,6 +22,9 @@ build/
 
 # TypeScript
 *.tsbuildinfo
+
+# Test files
+src/test/
 
 # Logs
 logs
