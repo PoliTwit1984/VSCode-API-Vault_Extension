@@ -1,7 +1,11 @@
 import * as vscode from 'vscode';
-import { StorageManager, KeyData, CategoryData } from '../../types';
+import { StorageManager, KeyData, CategoryData, ViewState } from '../../types';
 
 export class MockStorageManager implements StorageManager {
+    private viewState: ViewState = {
+        mode: 'list',
+        compact: false
+    };
     private keys: Map<string, string> = new Map();
     private keyData: KeyData[] = [];
     private categories: CategoryData[] = [];
@@ -86,6 +90,18 @@ export class MockStorageManager implements StorageManager {
 
     async getValue(key: string): Promise<string | undefined> {
         return this.keys.get(key);
+    }
+
+    async getViewState() {
+        return this.viewState;
+    }
+
+    async updateViewState(newState: Partial<ViewState>) {
+        this.viewState = { ...this.viewState, ...newState };
+    }
+
+    async updateCategoryStyle(name: string, icon?: string, color?: string) {
+        // Mock implementation
     }
 }
 

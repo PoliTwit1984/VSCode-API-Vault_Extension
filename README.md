@@ -12,15 +12,19 @@ Keep your API keys neatly organized in collapsible categories:
 - 🤖 AI & ML (OpenAI, HuggingFace)
 - 🛠️ Development Tools (GitHub, GitLab)
 
-## ✨ What's New in 4.0
+## ✨ What's New in 4.3.1
 
-We've completely redesigned API Vault to provide the best possible experience:
+We've supercharged API Vault with amazing improvements:
 
-- 🎨 **Beautiful New Interface** - A joy to use, right in your editor
-- 📁 **Smart Categories** - Organize keys your way with smooth collapsible sections
-- 🎯 **Drag & Drop** - Effortlessly organize keys and categories
-- 🔍 **Lightning-Fast Search** - Find any key instantly
-- 💅 **Native Feel** - Perfectly integrated with VS Code
+- 🚀 **Lightning-Fast Interface** - Instant key visibility and smoother updates
+- 🎯 **Smart Loading States** - Beautiful loading indicators and empty states
+- 📱 **Enhanced Compact Mode** - More keys at a glance (⌘/Ctrl+Shift+C)
+- ⌨️ **Power User Shortcuts**:
+  - Create categories instantly (⌘/Ctrl+Shift+N)
+  - Quick search access (⌘/Ctrl+F)
+- 🎨 **Polished UI** - Better visual feedback and animations
+- 💾 **Rock-Solid Reliability** - Improved state management and key preservation
+- 🔄 **Seamless Updates** - Optimized refresh handling for a butter-smooth experience
 
 ## 🚀 Features
 

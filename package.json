@@ -2,7 +2,7 @@
     "name": "api-vault",
     "displayName": "API Vault - Secure Key Manager",
     "description": "🔒 Your secure API key manager with an intuitive interface right in VS Code. Organize keys in collapsible categories, drag-and-drop management, instant search, and system keychain security.",
-    "version": "4.0.2",
+    "version": "4.3.2",
     "publisher": "josephdavidwilsonjr",
     "engines": {
         "vscode": "^1.74.0"
@@ -47,25 +47,41 @@
     ],
     "activationEvents": [],
     "main": "./out/extension.js",
-    "contributes": {
-        "commands": [
-            {
-                "command": "api-vault.storeKey",
-                "title": "API Vault: Store Key"
-            },
-            {
-                "command": "api-vault.getKey",
-                "title": "API Vault: Get Key"
-            },
-            {
-                "command": "api-vault.listKeys",
-                "title": "API Vault: List Keys"
-            },
-            {
-                "command": "api-vault.populateDemoData",
-                "title": "API Vault: Populate Demo Data"
-            }
-        ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "api-vault.toggleCompactMode",
+        "title": "API Vault: Toggle Compact Mode",
+        "category": "API Vault",
+        "icon": "$(layout)"
+      },
+      {
+        "command": "api-vault.focusSearch",
+        "title": "API Vault: Focus Search",
+        "category": "API Vault"
+      },
+      {
+        "command": "api-vault.createCategory",
+        "title": "API Vault: Create Category",
+        "category": "API Vault"
+      },
+      {
+        "command": "api-vault.storeKey",
+        "title": "API Vault: Store Key"
+      },
+      {
+        "command": "api-vault.getKey",
+        "title": "API Vault: Get Key"
+      },
+      {
+        "command": "api-vault.listKeys",
+        "title": "API Vault: List Keys"
+      },
+      {
+        "command": "api-vault.populateDemoData",
+        "title": "API Vault: Populate Demo Data"
+      }
+    ],
         "viewsContainers": {
             "activitybar": [
                 {
@@ -73,8 +89,28 @@
                     "title": "API Vault",
                     "icon": "API.png"
                 }
-            ]
-        },
+    ],
+    "keybindings": [
+      {
+        "command": "api-vault.toggleCompactMode",
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c",
+        "when": "activeWebviewPanelId == 'apiVaultView'"
+      },
+      {
+        "command": "api-vault.createCategory",
+        "key": "ctrl+shift+n",
+        "mac": "cmd+shift+n",
+        "when": "activeWebviewPanelId == 'apiVaultView'"
+      },
+      {
+        "command": "api-vault.focusSearch",
+        "key": "ctrl+f",
+        "mac": "cmd+f",
+        "when": "activeWebviewPanelId == 'apiVaultView'"
+      }
+    ]
+  },
         "views": {
             "api-vault": [
                 {

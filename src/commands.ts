@@ -1,14 +1,75 @@
 import * as vscode from 'vscode';
-import { StorageManager, CommandRegistry } from './types';
+import { StorageManager, CommandRegistry, ViewState } from './types';
 import { APIVaultWebviewProvider } from './webview/provider';
 import { populateDemoData } from './test/populate-demo-data';
+import { logger } from './utils/logger';
 
 export function registerCommands(
     context: vscode.ExtensionContext,
     storage: StorageManager,
     provider: APIVaultWebviewProvider
 ): void {
+
     const commands: CommandRegistry = {
+        'api-vault.toggleViewMode': async () => {
+            try {
+                const viewState = await storage.getViewState();
+                logger.command(`Toggling view mode. Current state: ${JSON.stringify(viewState)}`);
+                
+                const newMode = viewState.mode === 'list' ? 'grid' : 'list';
+                logger.command(`Setting new mode: ${newMode}`);
+                
+                await storage.updateViewState({
+                    mode: newMode
+                });
+                
+                logger.command('Refreshing view after mode change');
+                provider.refreshKeys();
+                
+                vscode.window.showInformationMessage(`View mode changed to ${newMode}`);
+            } catch (error) {
+                logger.error('Error in toggleViewMode command', error as Error);
+                throw error;
+            }
+        },
+
+        'api-vault.toggleCompactMode': async () => {
+            try {
+                const viewState = await storage.getViewState();
+                logger.command(`Toggling compact mode. Current state: ${JSON.stringify(viewState)}`);
+                
+                const newCompact = !viewState.compact;
+                logger.command(`Setting compact mode: ${newCompact}`);
+                
+                await storage.updateViewState({
+                    compact: newCompact
+                });
+                
+                logger.command('Refreshing view after compact mode change');
+                provider.refreshKeys();
+                
+                vscode.window.showInformationMessage(`Compact mode ${newCompact ? 'enabled' : 'disabled'}`);
+            } catch (error) {
+                logger.error('Error in toggleCompactMode command', error as Error);
+                throw error;
+            }
+        },
+
+        'api-vault.focusSearch': async () => {
+            provider.focusSearch();
+        },
+
+        'api-vault.createCategory': async () => {
+            const name = await vscode.window.showInputBox({
+                prompt: 'Enter category name',
+                placeHolder: 'e.g., Cloud Services'
+            });
+            if (name) {
+                await storage.createCategory(name);
+                provider.refreshKeys();
+            }
+        },
+
         'api-vault.populateDemoData': async () => {
             try {
                 await populateDemoData(context);

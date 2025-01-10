@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { VSCodeStorageManager } from '../storage';
 
 export async function populateDemoData(context: vscode.ExtensionContext) {
-    const storage = new VSCodeStorageManager(context.secrets, context.globalState);
+    const storage = await VSCodeStorageManager.create(context.secrets, context.globalState);
 
     // Create categories
     const categories = [

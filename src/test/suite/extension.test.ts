@@ -9,10 +9,10 @@ suite('API Vault Extension Test Suite', () => {
     let mockSecrets: MockSecretStorage;
     let mockGlobalState: MockMemento;
 
-    setup(() => {
+    setup(async () => {
         mockSecrets = new MockSecretStorage();
         mockGlobalState = new MockMemento();
-        storage = new VSCodeStorageManager(mockSecrets, mockGlobalState);
+        storage = await VSCodeStorageManager.create(mockSecrets, mockGlobalState);
     });
 
     test('Store and retrieve key', async () => {

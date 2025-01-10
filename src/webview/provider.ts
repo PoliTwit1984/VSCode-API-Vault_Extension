@@ -1,16 +1,23 @@
 import * as vscode from 'vscode';
 import { StorageManager, WebviewMessage } from '../types';
 import { getWebviewContent } from './template';
+import { logger } from '../utils/logger';
 
 export class APIVaultWebviewProvider implements vscode.WebviewViewProvider {
     private _view?: vscode.WebviewView;
+    private _updateTimeout?: NodeJS.Timeout;
 
     constructor(
         private readonly extensionUri: vscode.Uri,
         private readonly storage: StorageManager
     ) {}
 
-    public resolveWebviewView(
+    private _debounce(func: Function, wait: number) {
+        clearTimeout(this._updateTimeout);
+        this._updateTimeout = setTimeout(() => func(), wait);
+    }
+
+    public async resolveWebviewView(
         webviewView: vscode.WebviewView,
         context: vscode.WebviewViewResolveContext,
         _token: vscode.CancellationToken,
@@ -25,12 +32,48 @@ export class APIVaultWebviewProvider implements vscode.WebviewViewProvider {
         webviewView.webview.html = getWebviewContent();
 
         this._setWebviewMessageListener(webviewView.webview);
-        this._updateStoredKeys();
+        
+        // Initialize view state and keys
+        const initializeWebview = async () => {
+            logger.webview('Initializing webview data');
+            await this._updateStoredKeys();
+            
+            // Schedule a follow-up update to ensure data is loaded
+            setTimeout(async () => {
+                if (webviewView.visible) {
+                    logger.webview('Performing follow-up data refresh');
+                    await this._updateStoredKeys();
+                }
+            }, 1000);
+        };
+
+        // Initial load
+        await initializeWebview();
+
+        // Register webview visibility change handler
+        webviewView.onDidChangeVisibility(async () => {
+            if (webviewView.visible) {
+                logger.webview('Webview became visible, refreshing data');
+                await initializeWebview();
+            }
+        });
     }
 
     public refreshKeys(): void {
         if (this._view) {
-            this._view.webview.postMessage({ command: 'refreshKeys' });
+            // Clear any pending debounced updates
+            if (this._updateTimeout) {
+                clearTimeout(this._updateTimeout);
+                this._updateTimeout = undefined;
+            }
+            // Force an immediate update
+            this._updateStoredKeys();
+        }
+    }
+
+    public focusSearch(): void {
+        if (this._view) {
+            this._view.webview.postMessage({ command: 'focusSearch' });
         }
     }
 
@@ -38,6 +81,20 @@ export class APIVaultWebviewProvider implements vscode.WebviewViewProvider {
         webview.onDidReceiveMessage(async (message: WebviewMessage) => {
             try {
                 switch (message.command) {
+                    case 'api-vault.toggleViewMode':
+                        const currentMode = await this.storage.getViewState();
+                        await this.storage.updateViewState({
+                            mode: currentMode.mode === 'list' ? 'grid' : 'list'
+                        });
+                        await this._updateStoredKeys();
+                        break;
+                    case 'api-vault.toggleCompactMode':
+                        const currentCompact = await this.storage.getViewState();
+                        await this.storage.updateViewState({
+                            compact: !currentCompact.compact
+                        });
+                        await this._updateStoredKeys();
+                        break;
                     case 'storeKey':
                         if (message.key && message.value) {
                             await this.storage.storeKey(message.key, message.value, message.category);
@@ -128,20 +185,35 @@ export class APIVaultWebviewProvider implements vscode.WebviewViewProvider {
 
     private async _updateStoredKeys() {
         try {
-            if (this._view) {
-                const [keys, categories] = await Promise.all([
-                    this.storage.getKeys(),
-                    this.storage.getCategories()
-                ]);
-                this._view.webview.postMessage({ 
+            if (!this._view) {
+                logger.webview('View not available, skipping update');
+                return;
+            }
+
+            logger.webview('Updating stored keys and view state');
+            const [keys, categories, viewState] = await Promise.all([
+                this.storage.getKeys(),
+                this.storage.getCategories(),
+                this.storage.getViewState()
+            ]);
+            logger.webview(`Retrieved view state: ${JSON.stringify(viewState)}`);
+            
+            // Ensure the webview is still available and visible before sending update
+            if (this._view && this._view.visible) {
+                logger.webview(`Sending combined update with ${keys.length} keys and ${categories.length} categories`);
+                await this._view.webview.postMessage({ 
                     command: 'updateKeys', 
                     keys,
-                    categories
+                    categories,
+                    viewState
                 });
+                logger.webview('Update sent to webview');
+            } else {
+                logger.webview('View no longer visible, update skipped');
             }
         } catch (err) {
             const error = err as Error;
-            console.error('[Extension] Error updating stored keys:', error);
+            logger.error('Error updating stored keys', error);
             vscode.window.showErrorMessage(`Error updating stored keys: ${error.message}`);
         }
     }
